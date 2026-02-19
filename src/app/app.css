@@ -1,0 +1,62 @@
+/* ===== Enhanced Heading Styling ===== */
+
+.heading-container {
+  margin-bottom: 30px;
+}
+
+.main-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #250dfd, #1010f2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeSlide 0.6s ease-in-out;
+}
+
+.sub-heading {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-top: 8px;
+}
+
+body.dark-mode .sub-heading {
+  color: #bbb;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* General UI polish */
+
+.btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+.toast {
+  border-radius: 10px;
+  font-weight: 500;
+}

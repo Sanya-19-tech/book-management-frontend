@@ -1,0 +1,172 @@
+<div class="container mt-5">
+
+  <!-- Dark Mode Button -->
+  <div class="text-end mb-3">
+    <button class="btn btn-outline-dark"
+            (click)="toggleDarkMode()">
+      {{ isDarkMode ? '☀ Light Mode' : '🌙 Dark Mode' }}
+    </button>
+  </div>
+
+  <!-- Enhanced Heading -->
+  <div class="text-center mb-4 heading-container">
+    <h1 class="main-heading">
+      📚 Book Management System
+    </h1>
+    <p class="sub-heading">
+      Manage, organize and track your books efficiently
+    </p>
+  </div>
+
+  <!-- DASHBOARD STATS -->
+  <div class="row mb-4 text-center">
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow border-0 bg-primary text-white">
+        <div class="card-body">
+          <h5>Total Books</h5>
+          <h2 class="fw-bold">{{ totalBooks }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow border-0 bg-success text-white">
+        <div class="card-body">
+          <h5>Unique Authors</h5>
+          <h2 class="fw-bold">{{ totalAuthors }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow border-0 bg-dark text-white">
+        <div class="card-body">
+          <h5>Books Per Page</h5>
+          <h2 class="fw-bold">{{ pageSize }}</h2>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FORM -->
+  <div class="card shadow mb-4">
+    <div class="card-header bg-primary text-white">
+      {{ isEditing ? 'Edit Book' : 'Add Book' }}
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="addOrUpdateBook()">
+        <div class="row g-3">
+
+          <div class="col-md-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Title"
+                   [(ngModel)]="newBook.title"
+                   name="title"
+                   required>
+          </div>
+
+          <div class="col-md-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Author"
+                   [(ngModel)]="newBook.author"
+                   name="author"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <input type="text"
+                   class="form-control"
+                   placeholder="ISBN"
+                   [(ngModel)]="newBook.isbn"
+                   name="isbn"
+                   required>
+          </div>
+
+          <div class="col-md-1">
+            <button type="submit"
+                    class="btn btn-success w-100">
+              {{ isEditing ? 'Update' : 'Add' }}
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="mb-3">
+    <input type="text"
+           class="form-control"
+           placeholder="🔍 Search by title or author..."
+           [(ngModel)]="searchTerm">
+  </div>
+
+  <!-- TABLE -->
+  <div class="card shadow">
+    <div class="card-body p-0">
+
+      <table class="table table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let book of paginatedBooks; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.isbn }}</td>
+            <td class="text-center">
+
+              <button class="btn btn-warning btn-sm me-2"
+                      (click)="editBook(book)">
+                ✏
+              </button>
+
+              <button class="btn btn-danger btn-sm"
+                      (click)="deleteBook(book.id)">
+                🗑
+              </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- PAGINATION -->
+      <div class="d-flex justify-content-center p-3"
+           *ngIf="totalPages > 1">
+
+        <button class="btn btn-outline-primary btn-sm me-2"
+                [disabled]="currentPage === 1"
+                (click)="changePage(currentPage - 1)">
+          Previous
+        </button>
+
+        <span class="align-self-center">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+
+        <button class="btn btn-outline-primary btn-sm ms-2"
+                [disabled]="currentPage === totalPages"
+                (click)="changePage(currentPage + 1)">
+          Next
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
